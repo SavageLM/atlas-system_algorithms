@@ -1,5 +1,5 @@
-#ifndef _RB_TREES.H_
-#define _RB_TREES.H_
+#ifndef _RB_TREES_H_
+#define _RB_TREES_H_
 
 #include <stdlib.h>
 #include <stdio.h>
