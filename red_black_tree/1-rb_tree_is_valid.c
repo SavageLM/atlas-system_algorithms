@@ -32,6 +32,7 @@ int rb_tree_is_valid(const rb_tree_t *tree)
  * count_blk - Counts the number of black nodes in a tree
  * @node: node to check
  * @count: number of black nodes
+ * Return: Returns count
  */
 int count_blk(rb_tree_t *node, int count)
 {
