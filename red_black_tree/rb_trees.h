@@ -16,9 +16,9 @@
  */
 typedef enum rb_color_e
 {
-    RED = 0,
-    BLACK,
-    DOUBLE_BLACK
+	RED = 0,
+	BLACK,
+	DOUBLE_BLACK
 } rb_color_t;
 
 /**
@@ -32,11 +32,11 @@ typedef enum rb_color_e
  */
 typedef struct rb_tree_s
 {
-    int n;
-    rb_color_t color;
-    struct rb_tree_s *parent;
-    struct rb_tree_s *left;
-    struct rb_tree_s *right;
+	int n;
+	rb_color_t color;
+	struct rb_tree_s *parent;
+	struct rb_tree_s *left;
+	struct rb_tree_s *right;
 } rb_tree_t;
 
 /*Prototypes*/

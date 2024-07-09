@@ -17,6 +17,6 @@ rb_tree_t *rb_tree_node(rb_tree_t *parent, int value, rb_color_t color)
 	add->parent = parent;
 	add->n = value, add->color = color;
 	add->left = NULL, add->right = NULL;
-	
+
 	return (add);
 }
