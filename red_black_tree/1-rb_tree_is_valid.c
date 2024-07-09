@@ -36,11 +36,12 @@ int rb_tree_is_valid(const rb_tree_t *tree)
 int count_blk(rb_tree_t *node, int count)
 {
 	int left = 0, right = 0;
+
 	if (!node)
 		return (count);
 	if (node->color == 1)
 		count += 1;
-	left= count_blk(node->left, count);
+	left = count_blk(node->left, count);
 	right = count_blk(node->right, count);
 	return (left == right ? count : 0);
 }
