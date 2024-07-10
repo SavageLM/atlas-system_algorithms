@@ -4,6 +4,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+/*MACROS*/
+#define GRANDPA node->parent->parent
+#define PARENT node->parent
+
 
 /* Structs */
 
