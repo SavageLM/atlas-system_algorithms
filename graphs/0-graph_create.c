@@ -9,5 +9,5 @@ graph_t *graph_create(void)
 	graph_t *new_graph = NULL;
 
 	new_graph = calloc(1, sizeof(graph_t));
-	return(!new_graph ? NULL : new_graph);
+	return (!new_graph ? NULL : new_graph);
 }
