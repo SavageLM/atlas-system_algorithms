@@ -8,9 +8,9 @@
  */
 vertex_t *graph_add_vertex(graph_t *graph, const char *str)
 {
-	vertex_t *tmp = NULL, *new_vert = NULL;
+	vertex_t *tmp = NULL, *prev = NULL, *new_vert = NULL;
 
-	if (!graph)
+	if (!graph || !str)
 		return (NULL);
 	new_vert = calloc(1, sizeof(vertex_t));
 	if (!new_vert)
@@ -21,7 +21,7 @@ vertex_t *graph_add_vertex(graph_t *graph, const char *str)
 		new_vert->content = strdup(str);
 		return (new_vert);
 	}
-	for (tmp = graph->vertices; tmp->next; tmp = tmp->next)
+	for (tmp = graph->vertices; tmp; prev = tmp, tmp = tmp->next)
 	{
 		if (!strcmp(str, tmp->content))
 		{
@@ -29,9 +29,9 @@ vertex_t *graph_add_vertex(graph_t *graph, const char *str)
 			return (NULL);
 		}
 	}
-	tmp->next = new_vert;
+	prev->next = new_vert;
 	new_vert->content = strdup(str);
-	new_vert->index = tmp->index + 1;
+	new_vert->index = prev->index + 1;
 	new_vert->next = NULL;
 	graph->nb_vertices += 1;
 	return (new_vert);
