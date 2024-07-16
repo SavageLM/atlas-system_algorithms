@@ -9,10 +9,11 @@
 size_t depth_first_traverse(const graph_t *graph,
 							void (*action)(const vertex_t *v, size_t depth))
 {
-	size_t *visited = calloc(graph->nb_vertices, sizeof(size_t)), depth = 0;
+	size_t *visited, depth = 0;
 
-	if (!graph || !graph->vertices)
+	if (!graph || !graph->vertices || !action)
 		return (0);
+	*visited = calloc(graph->nb_vertices, sizeof(size_t));
 	depth = dft_recursive(graph->vertices, action, visited, depth);
 	free(visited);
 	return (depth);
