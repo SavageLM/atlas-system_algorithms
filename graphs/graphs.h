@@ -6,8 +6,7 @@
 #include <string.h>
 
 /* MACROS */
-#define NEXT_VERT vertex->edges->dest
-#define NEXT_EDGE vertex->edges->next
+#define NEXT_VERT edge->dest->index
 
 /* STRUCTS */
 /**
