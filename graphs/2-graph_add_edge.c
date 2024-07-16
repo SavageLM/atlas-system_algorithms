@@ -10,7 +10,8 @@ int assign_edge(vertex_t *start, vertex_t *end);
  * @type: Edge type
  * Return: 1 on success, else 0
  */
-int graph_add_edge(graph_t *graph, const char *src, const char *dest, edge_type_t type)
+int graph_add_edge(graph_t *graph, const char *src, const char *dest,
+					edge_type_t type)
 {
 	vertex_t *start = NULL, *end = NULL, *tmp;
 
