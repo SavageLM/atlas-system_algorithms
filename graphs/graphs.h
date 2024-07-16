@@ -5,6 +5,10 @@
 #include <stdlib.h>
 #include <string.h>
 
+/* MACROS */
+#define NEXT_VERT vertex->edges->dest
+#define NEXT_EDGE vertex->edges->next
+
 /* STRUCTS */
 /**
  * enum edge_type_e - Enumerates the different types of
@@ -79,5 +83,6 @@ void graph_delete(graph_t *graph);
 size_t depth_first_traverse(const graph_t *graph, void (*action)(const vertex_t *v, size_t depth));
 size_t breadth_first_traverse(const graph_t *graph, void (*action)(const vertex_t *v, size_t depth));
 
+size_t dft_recursive(vertex_t *vertex, void (*action)(const vertex_t *v, size_t depth), size_t *visited, size_t depth);
 
 #endif

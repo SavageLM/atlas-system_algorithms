@@ -1,3 +1,4 @@
 *-main.c
 1-graph_add_vertex
 2-graph_add_edge
+3-graph_delete
