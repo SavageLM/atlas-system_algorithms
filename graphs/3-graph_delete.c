@@ -12,7 +12,10 @@ void graph_delete(graph_t *graph)
 	if (!graph)
 		return;
 	if (!graph->vertices)
+	{
 		free(graph);
+		return;
+	}
 	tmp_vert = graph->vertices;
 	while (tmp_vert)
 	{
