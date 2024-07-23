@@ -1,5 +1,8 @@
 #include "heap.h"
 
+btn *is_full(const btn *node);
+btn *balance(int (*cmp)(void *, void *), btn *node);
+
 /**
  * heap_insert - Inserts a node value data to min heap tree
  * @heap: heap to insert to
