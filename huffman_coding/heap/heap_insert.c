@@ -1,6 +1,6 @@
 #include "heap.h"
 
-btn *is_full(const btn *node);
+btn *is_full(btn *node);
 btn *balance(int (*cmp)(void *, void *), btn *node);
 
 /**
@@ -11,7 +11,7 @@ btn *balance(int (*cmp)(void *, void *), btn *node);
  */
 binary_tree_node_t *heap_insert(heap_t *heap, void *data)
 {
-	binary_tree_node_t *new = NULL, *ptr = NULL, *tmp = NULL;
+	binary_tree_node_t *new = NULL, *tmp = NULL;
 
 	if (!heap || !data)
 		return (NULL);
@@ -31,13 +31,22 @@ binary_tree_node_t *heap_insert(heap_t *heap, void *data)
 		new = binary_tree_node(tmp, data);
 		if (!new)
 			return (NULL);
+		if (tmp->left)
+			tmp->right = new;
+		else
+			tmp->left = new;
 	}
 	else
 	{
 		new = binary_tree_node(tmp, data);
 		if (!new)
 			return (NULL);
+		if (tmp->left)
+			tmp->right = new;
+		else
+			tmp->left = new;
 	}
+	heap->size += 1;
 	return (balance(heap->data_cmp, new));
 }
 
@@ -46,7 +55,7 @@ binary_tree_node_t *heap_insert(heap_t *heap, void *data)
  * @node: node to check
  * Return: NULL if Full, pointer to non-full node on fail
  */
-btn *is_full(const btn *node)
+btn *is_full(btn *node)
 {
 	btn *ptr = NULL;
 
@@ -73,7 +82,7 @@ btn *balance(int (*cmp)(void *, void *), btn *node)
 {
 	btn *tmp = NULL;
 
-	if (cmp(node->data, node->parent->data) < 0)
+	if (node->parent && (cmp(node->data, node->parent->data) < 0))
 	{
 		tmp = node->parent;
 		node->parent->data = node->data;
