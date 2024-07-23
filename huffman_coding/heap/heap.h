@@ -21,7 +21,7 @@ typedef struct binary_tree_node_s
 	struct binary_tree_node_s *left;
 	struct binary_tree_node_s *right;
 	struct binary_tree_node_s *parent;
-} binary_tree_node_t;
+} binary_tree_node_t, btn;
 
 /**
  * struct heap_s - Heap data structure
