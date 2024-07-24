@@ -1,5 +1,7 @@
 #include "heap.h"
 
+void get_outta_here(btn *node, void (*free_data)(void *))
+
 /**
  * heap_delete - Deletes a heap
  * @heap: heap to delete
@@ -18,7 +20,7 @@ void heap_delete(heap_t *heap, void (*free_data)(void *))
  * @node: Node to free
  * @free_data: function to call on all nodes
  */
-get_outta_here(btn *node, void (*free_data)(void *))
+void get_outta_here(btn *node, void (*free_data)(void *))
 {
 	if (!node)
 		return;
