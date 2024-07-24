@@ -6,6 +6,7 @@ static btn *balance(int (*cmp)(void *, void *), btn *node);
 /**
  * heap_extract - Extracts a value from the heap
  * @heap: heap to extract from
+ * Return: extracted data, or NULL on Fail
  */
 void *heap_extract(heap_t *heap)
 {
@@ -16,7 +17,10 @@ void *heap_extract(heap_t *heap)
 		return (NULL);
 	extract = (int *)heap->root->data;
 	if (heap->size == 1)
+	{
 		free(heap->root);
+		return ((void *)extract);
+	}
 	tmp = get_last(heap);
 	if (tmp->parent->left == tmp)
 		tmp->parent->left = NULL;
@@ -92,12 +96,12 @@ static btn *balance(int (*cmp)(void *, void *), btn *node)
 	if (!RIGHT && LEFT)
 	{
 		if (cmp(LEFT->data, node->data) < 0)
-			{
-				tmp = (int *)LEFT->data;
-				LEFT->data = node->data;
-				node->data = (void *)tmp;
-				balance(cmp, LEFT);
-			}
+		{
+			tmp = (int *)LEFT->data;
+			LEFT->data = node->data;
+			node->data = (void *)tmp;
+			balance(cmp, LEFT);
+		}
 			return (node);
 	}
 	return (node);
