@@ -1,6 +1,6 @@
 #include "heap.h"
 
-void get_outta_here(btn *node, void (*free_data)(void *))
+void get_outta_here(btn *node, void (*free_data)(void *));
 
 /**
  * heap_delete - Deletes a heap
