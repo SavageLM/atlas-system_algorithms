@@ -80,13 +80,13 @@ btn *is_full(btn *node)
  */
 btn *balance(int (*cmp)(void *, void *), btn *node)
 {
-	btn *tmp = NULL;
+	int *tmp;
 
 	if (node->parent && (cmp(node->data, node->parent->data) < 0))
 	{
-		tmp = node->parent;
+		tmp = (int *)node->parent->data;
 		node->parent->data = node->data;
-		node->data = tmp->data;
+		node->data = (void *)tmp;
 		return (balance(cmp, node->parent));
 	}
 	return (node);
