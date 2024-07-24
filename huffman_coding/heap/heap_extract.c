@@ -47,6 +47,8 @@ static btn *get_last(heap_t *heap)
 	unsigned long size = (unsigned long)heap->size;
 	btn *node = heap->root;
 
+	if (size == 2)
+		return (LEFT);
 	while (size >= 2)
 	{
 		results = div(size, 2);
