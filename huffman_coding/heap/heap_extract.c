@@ -1,6 +1,6 @@
 #include "heap.h"
 
-static btn *is_full(btn *node);
+static btn *get_last(heap_t *heap);
 static btn *balance(int (*cmp)(void *, void *), btn *node);
 
 /**
@@ -15,14 +15,13 @@ void *heap_extract(heap_t *heap)
 	if (!heap)
 		return (NULL);
 	extract = (int *)heap->root->data;
-	tmp = is_full(heap->root);
-	if (!tmp)
-	{
-		for (tmp = heap->root; tmp->right; tmp = tmp->right)
-			;
-	}
-	if (tmp)
-		tmp = tmp->left;
+	if (heap->size == 1)
+		free(heap->root);
+	tmp = get_last(heap);
+	if (tmp->parent->left == tmp)
+		tmp->parent->left = NULL;
+	else
+		tmp->parent->right = NULL;
 	tmp_data = (int *)tmp->data;
 	free(tmp);
 	heap->root->data = (void *)tmp_data;
@@ -32,25 +31,27 @@ void *heap_extract(heap_t *heap)
 }
 
 /**
- * is_full - verifies if binary tree is full
- * @node: node to check
- * Return: NULL if Full, pointer to non-full node on fail
+ * get_last - retreives last node
+ * @heap: Heap to navigate
+ * Return: Pointer to last node
  */
-static btn *is_full(btn *node)
+static btn *get_last(heap_t *heap)
 {
-	btn *ptr = NULL;
+	div_t results;
+	unsigned long size = (unsigned long)heap->size;
+	btn *node = heap->root;
 
-	if (!node || (!node->left && node->right) || (node->left && !node->right))
-		return (node);
-	if (!node->left && !node->right)
-		return (NULL);
-	ptr = is_full(node->left);
-	if (ptr)
-		return (ptr);
-	ptr = is_full(node->right);
-	if (ptr)
-		return (ptr);
-	return (NULL);
+	while (size >= 2)
+	{
+		results = div(size, 2);
+		if (results.rem == 1)
+			node = node->left;
+		else
+			node = node->right;
+		size = results.quot;
+	}
+
+	return (node);
 }
 
 /**
@@ -61,31 +62,43 @@ static btn *is_full(btn *node)
  */
 static btn *balance(int (*cmp)(void *, void *), btn *node)
 {
-	int *tmp = (int *)node->data, *left = 0, *right = 0;
+	int *tmp;
 
-	
-	if (node->right)
-		right = (int *)node->right->data;
-	if (node->left)
-		left = (int *)node->left->data;
-	if ((right && left && right < left) || !left)
+	if (RIGHT && LEFT)
 	{
-		if ((cmp(node->data, node->right->data) > 0))
+		if (cmp(LEFT->data, RIGHT->data) > 0)
 		{
-			node->data = (void *)right, node->right->data = (void *)tmp;
-			return (balance(cmp, node->right));
+			if (cmp(RIGHT->data, node->data) < 0)
+			{
+				tmp = (int *)RIGHT->data;
+				RIGHT->data = node->data;
+				node->data = (void *)tmp;
+				balance(cmp, RIGHT);
+			}
+			return (node);
 		}
-		return (node);
+		else
+		{
+			if (cmp(LEFT->data, node->data) < 0)
+			{
+				tmp = (int *)LEFT->data;
+				LEFT->data = node->data;
+				node->data = (void *)tmp;
+				balance(cmp, LEFT);
+			}
+			return (node);
+		}
 	}
-	if ((right && left && left < right) || !right)
+	if (!RIGHT && LEFT)
 	{
-		if ((cmp(node->data, node->left->data) > 0))
-		{
-			node->data = (void *)left, node->left->data = (void *)tmp;
-			return (balance(cmp, node->left));
-		}
-		return (node);
+		if (cmp(LEFT->data, node->data) < 0)
+			{
+				tmp = (int *)LEFT->data;
+				LEFT->data = node->data;
+				node->data = (void *)tmp;
+				balance(cmp, LEFT);
+			}
+			return (node);
 	}
-	else
-		return (node);
+	return (node);
 }

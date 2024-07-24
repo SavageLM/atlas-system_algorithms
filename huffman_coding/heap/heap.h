@@ -5,6 +5,10 @@
 #include <stdio.h>
 #include <string.h>
 
+/* MACROS */
+#define RIGHT node->right
+#define LEFT node->left
+
 /* Structs */
 
 /**
