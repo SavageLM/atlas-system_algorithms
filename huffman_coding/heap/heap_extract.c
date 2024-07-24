@@ -19,6 +19,8 @@ void *heap_extract(heap_t *heap)
 	if (heap->size == 1)
 	{
 		free(heap->root);
+		heap->root = NULL;
+		heap->size -= 1;
 		return ((void *)extract);
 	}
 	tmp = get_last(heap);
