@@ -1,7 +1,7 @@
 #include "heap.h"
 
-btn *is_full(btn *node);
-btn *balance(int (*cmp)(void *, void *), btn *node);
+static btn *is_full(btn *node);
+static btn *balance(int (*cmp)(void *, void *), btn *node);
 
 /**
  * heap_insert - Inserts a node value data to min heap tree
@@ -55,7 +55,7 @@ binary_tree_node_t *heap_insert(heap_t *heap, void *data)
  * @node: node to check
  * Return: NULL if Full, pointer to non-full node on fail
  */
-btn *is_full(btn *node)
+static btn *is_full(btn *node)
 {
 	btn *ptr = NULL;
 
@@ -78,7 +78,7 @@ btn *is_full(btn *node)
  * @node: Newest node
  * Return: node that contains newest data
  */
-btn *balance(int (*cmp)(void *, void *), btn *node)
+static btn *balance(int (*cmp)(void *, void *), btn *node)
 {
 	int *tmp;
 
