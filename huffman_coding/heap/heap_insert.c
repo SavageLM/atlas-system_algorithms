@@ -1,6 +1,6 @@
 #include "heap.h"
 
-static btn *is_full(btn *node);
+static btn *get_last(heap_t *heap);
 static btn *balance(int (*cmp)(void *, void *), btn *node);
 
 /**
@@ -15,61 +15,40 @@ binary_tree_node_t *heap_insert(heap_t *heap, void *data)
 
 	if (!heap || !data)
 		return (NULL);
+	new = binary_tree_node(NULL, data);
+	if (!new)
+		return (NULL);
 	if (!heap->root)
 	{
-		new = binary_tree_node(NULL, data);
-		if (!new)
-			return (NULL);
 		heap->root = new, heap->size += 1;
 		return (new);
 	}
-	tmp = is_full(heap->root);
-	if (!tmp)
-	{
-		for (tmp = heap->root; tmp->left; tmp = tmp->left)
-			;
-		new = binary_tree_node(tmp, data);
-		if (!new)
-			return (NULL);
-		if (tmp->left)
-			tmp->right = new;
-		else
-			tmp->left = new;
-	}
+	tmp = get_last(heap);
+	if (heap->size & 1)
+		tmp->left = new;
 	else
-	{
-		new = binary_tree_node(tmp, data);
-		if (!new)
-			return (NULL);
-		if (tmp->left)
-			tmp->right = new;
-		else
-			tmp->left = new;
-	}
+		tmp->right = new;
+	new->parent = tmp;
 	heap->size += 1;
 	return (balance(heap->data_cmp, new));
 }
 
 /**
- * is_full - verifies if binary tree is full
- * @node: node to check
- * Return: NULL if Full, pointer to non-full node on fail
+ * get_last - retreives last node
+ * @heap: Heap to navigate
+ * Return: Pointer to last node
  */
-static btn *is_full(btn *node)
+static btn *get_last(heap_t *heap)
 {
-	btn *ptr = NULL;
+	unsigned long mask = 1;
+	btn *node = NULL;
 
-	if (!node || (!node->left && node->right) || (node->left && !node->right))
-		return (node);
-	if (!node->left && !node->right)
-		return (NULL);
-	ptr = is_full(node->left);
-	if (ptr)
-		return (ptr);
-	ptr = is_full(node->right);
-	if (ptr)
-		return (ptr);
-	return (NULL);
+	for (mask <<= 63; !(mask & (heap->size + 1)); mask >>= 1)
+		;
+	mask >>= 1;
+	for (node = heap->root; mask > 1; mask >>= 1)
+		node = mask & (heap->size + 1) ? node->right : node->left;
+	return (node);
 }
 
 /**

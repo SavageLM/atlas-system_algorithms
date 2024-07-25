@@ -11,7 +11,7 @@ static btn *balance(int (*cmp)(void *, void *), btn *node);
 void *heap_extract(heap_t *heap)
 {
 	int *extract = NULL, *tmp_data = 0;
-	btn *tmp = NULL;
+	btn *tmp = NULL, *node;
 
 	if (!heap)
 		return (NULL);
@@ -24,12 +24,12 @@ void *heap_extract(heap_t *heap)
 		return ((void *)extract);
 	}
 	tmp = get_last(heap);
-	if (tmp->parent->left == tmp)
-		tmp->parent->left = NULL;
+	if ((heap->size -1) & 1)
+		node = tmp->left, tmp->left = NULL;
 	else
-		tmp->parent->right = NULL;
-	tmp_data = (int *)tmp->data;
-	free(tmp);
+		node = tmp->right, tmp->right = NULL;
+	tmp_data = (int *)node->data;
+	free(node);
 	heap->root->data = (void *)tmp_data;
 	balance(heap->data_cmp, heap->root);
 	heap->size -= 1;
@@ -43,22 +43,14 @@ void *heap_extract(heap_t *heap)
  */
 static btn *get_last(heap_t *heap)
 {
-	div_t results;
-	unsigned long size = (unsigned long)heap->size;
-	btn *node = heap->root;
+	unsigned long mask = 1;
+	btn *node = NULL;
 
-	if (size == 2)
-		return (LEFT);
-	while (size >= 2)
-	{
-		results = div(size, 2);
-		if (results.rem == 1)
-			node = node->left;
-		else
-			node = node->right;
-		size = results.quot;
-	}
-
+	for (mask <<= 63; !(mask & heap->size); mask >>= 1)
+		;
+	mask >>= 1;
+	for (node = heap->root; mask > 1; mask >>= 1)
+		node = mask & heap->size ? node->right : node->left;
 	return (node);
 }
 
