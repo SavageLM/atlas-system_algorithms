@@ -24,7 +24,7 @@ void *heap_extract(heap_t *heap)
 		return ((void *)extract);
 	}
 	tmp = get_last(heap);
-	if ((heap->size -1) & 1)
+	if ((heap->size - 1) & 1)
 		node = tmp->left, tmp->left = NULL;
 	else
 		node = tmp->right, tmp->right = NULL;
