@@ -1,7 +1,7 @@
 #include "huffman.h"
 #include "heap.h"
 
-int cmp(void *f1, void *f2);
+static int cmp(void *f1, void *f2);
 static btn *get_last(heap_t *heap);
 static btn *balance(int (*cmp)(void *, void *), btn *node);
 
@@ -59,7 +59,7 @@ heap_t *huffman_priority_queue(char *data, size_t *freq, size_t size)
  * @f2: frequency 2
  * Return: 1 or 0
  */
-int cmp(void *f1, void *f2)
+static int cmp(void *f1, void *f2)
 {
 	return (FREQUENCY(f1) < FREQUENCY(f2) ? 1 : 0);
 }
