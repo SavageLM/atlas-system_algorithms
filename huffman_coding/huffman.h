@@ -4,6 +4,13 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include "heap.h"
+
+/* MACROS */
+
+#define SYMBOL ((btn *)node->data)->data
+#define P_SYMBOL ((btn *)node->parent->data)->data
+#define FREQUENCY(x) ((symbol_t *)(x))->freq
 
 /* Structs */
 
@@ -22,5 +29,6 @@ typedef struct symbol_s
 /* Prototypes */
 
 symbol_t *symbol_create(char data, size_t freq);
+heap_t *huffman_priority_queue(char *data, size_t *freq, size_t size);
 
 #endif
