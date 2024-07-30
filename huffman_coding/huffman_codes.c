@@ -14,7 +14,7 @@ void print_huff(symbol_t *symb, char *huff_code);
 int huffman_codes(char *data, size_t *freq, size_t size)
 {
 	btn *huff = NULL;
-	char huff_code[10];
+	char huff_code[10] = {0};
 	int pos = 0;
 
 	if (!data || !freq || !size)
@@ -23,6 +23,7 @@ int huffman_codes(char *data, size_t *freq, size_t size)
 	if (!huff)
 		return (0);
 	get_huff(huff, huff_code, pos);
+	free(huff_code);
 	return (1);
 }
 
