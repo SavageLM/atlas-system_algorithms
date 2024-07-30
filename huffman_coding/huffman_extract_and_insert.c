@@ -44,7 +44,7 @@ int huffman_extract_and_insert(heap_t *priority_queue)
  */
 static int cmp(void *f1, void *f2)
 {
-	return (FREQUENCY(f1) <= FREQUENCY(f2) ? 1 : 0);
+	return (FREQUENCY(f1) < FREQUENCY(f2) ? 1 : 0);
 }
 
 /**

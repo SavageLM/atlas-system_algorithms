@@ -61,7 +61,7 @@ heap_t *huffman_priority_queue(char *data, size_t *freq, size_t size)
  */
 static int cmp(void *f1, void *f2)
 {
-	return (FREQUENCY(f1) <= FREQUENCY(f2) ? 1 : 0);
+	return (FREQUENCY(f1) < FREQUENCY(f2) ? 1 : 0);
 }
 
 /**
