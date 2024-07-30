@@ -23,7 +23,6 @@ int huffman_codes(char *data, size_t *freq, size_t size)
 	if (!huff)
 		return (0);
 	get_huff(huff, huff_code, pos);
-	free(huff_code);
 	return (1);
 }
 
@@ -54,7 +53,7 @@ void print_huff(symbol_t *symb, char *huff_code)
 {
 	int i = 0;
 
-	printf("%c: ",symb->data);
+	printf("%c: ", symb->data);
 	for (i = 0; huff_code[i] != '\0'; i++)
 		printf("%c", huff_code[i]);
 	putchar('\n');
