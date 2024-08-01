@@ -3,6 +3,7 @@
 
 void get_huff(btn *node, char *huff_code, int pos);
 void print_huff(symbol_t *symb, char *huff_code);
+void destroy_huff(btn *root);
 
 /**
  * huffman_codes - Generates a Huffman code for each character
