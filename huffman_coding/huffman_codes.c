@@ -73,5 +73,4 @@ void destroy_huff(btn *root)
 	destroy_huff(root->right);
 	free((symbol_t *)root->data);
 	free(root);
-	return;
 }
