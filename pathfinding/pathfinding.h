@@ -4,9 +4,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <graphs.h>
-#include <queues.h>
+#include "graphs.h"
+#include "queues.h"
 
+/* MACROS */
+#define VISITED visit[point->y * rows + point->x]
+#define SET_RIGHT next = point, next->x + 1
+#define SET_BOTTOM next = point, next->y + 1
+#define SET_LEFT next = point, next->x - 1
+#define SET_TOP next = point, next->y - 1
 
 /* STRUCTS */
 
@@ -21,6 +27,21 @@ typedef struct point_s
 	int x;
 	int y;
 } point_t;
+
+/**
+ * enum direction - direction point needs to move
+ * @RIGHT: Move to the right
+ * @BOTTOM: Move down
+ * @LEFT: Move to the left
+ * @TOP: Move up
+ */
+typedef enum directions
+{
+	RIGHT,
+	BOTTOM,
+	LEFT,
+	TOP
+} directions;
 
 /* Prototypes */
 queue_t *backtracking_array(char **map, int rows, int cols,
