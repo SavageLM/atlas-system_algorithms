@@ -1,9 +1,9 @@
 #include "pathfinding.h"
 
 queue_t *backtrack(char **map, int rows, int cols,
-					point_t *point, point_t const *target,
+					point_t const *point, point_t const *target,
 					queue_t *que, int *visit);
-point_t *valid_next(point_t *point, int rows, int cols, directions dir);
+point_t *valid_next(point_t const *point, int rows, int cols, directions dir);
 
 /**
  * backtracking_array - Function for finiding a path from start to target
@@ -18,7 +18,7 @@ queue_t *backtracking_array(char **map, int rows, int cols,
 							point_t const *start, point_t const *target)
 {
 	queue_t *que = NULL;
-	int visit[[]];
+	int *visit;
 
 	if (!map || !rows || !cols || !start || !target)
 		return (NULL);
@@ -29,7 +29,8 @@ queue_t *backtracking_array(char **map, int rows, int cols,
 	visit = calloc((rows * cols), sizeof(int));
 	if (!visit)
 		return (NULL);
-	backtrack(map, rows, cols, start, target, que, visit);
+	if (!backtrack(map, rows, cols, start, target, que, visit))
+		return (NULL);
 	return (que);
 }
 
@@ -45,7 +46,7 @@ queue_t *backtracking_array(char **map, int rows, int cols,
  * Return: pointer to que holding the path
  */
 queue_t *backtrack(char **map, int rows, int cols,
-					point_t *point, point_t const *target,
+					point_t const *point, point_t const *target,
 					queue_t *que, int *visit)
 {
 	int x = point->x, y = point->y;
@@ -97,7 +98,7 @@ queue_t *backtrack(char **map, int rows, int cols,
  * @dir: Direction to move
  * Return: adjuested point or NULL;
  */
-point_t *valid_next(point_t *point, int rows, int cols, directions dir)
+point_t *valid_next(point_t const *point, int rows, int cols, directions dir)
 {
 	point_t *next;
 
