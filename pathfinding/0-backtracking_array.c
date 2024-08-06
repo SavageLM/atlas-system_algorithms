@@ -21,8 +21,6 @@ queue_t *backtracking_array(char **map, int rows, int cols,
 	point_t *tmp = NULL;
 	int *visit;
 
-	puts("Made it to Main function");
-
 	if (!map || !rows || !cols || !start || !target)
 		return (NULL);
 	que = queue_create();
@@ -63,12 +61,8 @@ queue_t *backtrack(char **map, int rows, int cols,
 	point_t *tmp;
 	enum directions dir;
 
-	puts("Made it to backtrack");
 	if (VISITED)
-	{
-		puts("NULL 0");
 		return (NULL);
-	}
 	printf("Checking coordinates [%d, %d]\n", point->x, point->y);
 
 	if (x == target->x && y == target->y)
@@ -101,7 +95,6 @@ queue_t *backtrack(char **map, int rows, int cols,
 		if (queue_push_front(que, (void *)point))
 			return (que);
 	}
-	puts("NULL 1");
 	return (NULL);
 }
 
@@ -116,54 +109,41 @@ queue_t *backtrack(char **map, int rows, int cols,
  */
 point_t *valid_next(char **map, point_t *point, int rows, int cols, int dir)
 {
-	point_t *next;
+	point_t *next = NULL;
 
-	puts("Made it to valid_next");
-
+	next = malloc(sizeof(point_t));
+	if (!next)
+		return (NULL);
+	next->x = point->x, next->y = point->y;
 	if (dir == 0)
 	{
 		if (point->x + 1 < cols)
 			SET_RIGHT;
 		else
-		{
-			puts("NULL 2");
 			return (NULL);
-		}
 	}
 	if (dir == 1)
 	{
 		if (point->y + 1 < rows)
 			SET_BOTTOM;
 		else
-		{
-			puts("NULL 3");
 			return (NULL);
-		}
 	}
 	if (dir == 2)
 	{
 		if (point->x - 1 >= 0)
 			SET_LEFT;
 		else
-		{
-			puts("NULL 4");
 			return (NULL);
-		}
 	}
 	if (dir == 3)
 	{
 		if (point->y - 1 >= 0)
 			SET_TOP;
 		else
-		{
-			puts("NULL 5");
 			return (NULL);
-		}
 	}
 	if (POINT == '1')
-	{
-		puts("NULL 6");
 		return (NULL);
-	}
 	return (next);
 }
