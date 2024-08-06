@@ -18,6 +18,7 @@ queue_t *backtracking_array(char **map, int rows, int cols,
 							point_t const *start, point_t const *target)
 {
 	queue_t *que = NULL;
+	point_t *tmp = NULL;
 	int *visit;
 
 	if (!map || !rows || !cols || !start || !target)
@@ -29,7 +30,11 @@ queue_t *backtracking_array(char **map, int rows, int cols,
 	visit = calloc((rows * cols), sizeof(int));
 	if (!visit)
 		return (NULL);
-	if (!backtrack(map, rows, cols, start, target, que, visit))
+	tmp = malloc(sizeof(point_t));
+	if (!tmp)
+		return (NULL);
+	tmp->x = start->x, tmp->y = start->y;
+	if (!backtrack(map, rows, cols, tmp, target, que, visit))
 		return (NULL);
 	return (que);
 }
