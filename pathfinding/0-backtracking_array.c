@@ -3,7 +3,7 @@
 queue_t *backtrack(char **map, int rows, int cols,
 					point_t *point, point_t const *target,
 					queue_t *que, int *visit);
-point_t *valid_next(point_t *point, int rows, int cols, directions dir);
+point_t *valid_next(char **map, point_t *point, int rows, int cols, int dir);
 
 /**
  * backtracking_array - Function for finiding a path from start to target
@@ -21,6 +21,8 @@ queue_t *backtracking_array(char **map, int rows, int cols,
 	point_t *tmp = NULL;
 	int *visit;
 
+	puts("Made it to Main function");
+
 	if (!map || !rows || !cols || !start || !target)
 		return (NULL);
 	que = queue_create();
@@ -35,7 +37,10 @@ queue_t *backtracking_array(char **map, int rows, int cols,
 		return (NULL);
 	tmp->x = start->x, tmp->y = start->y;
 	if (!backtrack(map, rows, cols, tmp, target, que, visit))
+	{
+		puts("FINAL NULL");
 		return (NULL);
+	}
 	return (que);
 }
 
@@ -58,82 +63,107 @@ queue_t *backtrack(char **map, int rows, int cols,
 	point_t *tmp;
 	enum directions dir;
 
-	if (map[point->y][point->x])
+	puts("Made it to backtrack");
+	if (VISITED)
+	{
+		puts("NULL 0");
 		return (NULL);
+	}
+	printf("Checking coordinates [%d, %d]\n", point->x, point->y);
+
 	if (x == target->x && y == target->y)
 	{
 		if (queue_push_front(que, (void *)point))
 			return (que);
 	}
-	if (VISITED)
-		return (NULL);
 	VISITED = 1;
-	dir = RIGHT, tmp = valid_next(point, rows, cols, dir);
-	if (tmp && backtrack(map, rows, cols, point, target, que, visit))
+	dir = RIGHT, tmp = valid_next(map,point, rows, cols, dir);
+	if (tmp && backtrack(map, rows, cols, tmp, target, que, visit))
 	{
 		if (queue_push_front(que, (void *)point))
 			return (que);
 	}
-	dir = BOTTOM, tmp = valid_next(point, rows, cols, dir);
-	if (tmp && backtrack(map, rows, cols, point, target, que, visit))
+	dir = BOTTOM, tmp = valid_next(map,point, rows, cols, dir);
+	if (tmp && backtrack(map, rows, cols, tmp, target, que, visit))
 	{
 		if (queue_push_front(que, (void *)point))
 			return (que);
 	}
-	dir = LEFT, tmp = valid_next(point, rows, cols, dir);
-	if (tmp && backtrack(map, rows, cols, point, target, que, visit))
+	dir = LEFT, tmp = valid_next(map,point, rows, cols, dir);
+	if (tmp && backtrack(map, rows, cols, tmp, target, que, visit))
 	{
 		if (queue_push_front(que, (void *)point))
 			return (que);
 	}
-	dir = TOP, tmp = valid_next(point, rows, cols, dir);
-	if (tmp && backtrack(map, rows, cols, point, target, que, visit))
+	dir = TOP, tmp = valid_next(map,point, rows, cols, dir);
+	if (tmp && backtrack(map, rows, cols, tmp, target, que, visit))
 	{
 		if (queue_push_front(que, (void *)point))
 			return (que);
 	}
+	puts("NULL 1");
 	return (NULL);
 }
 
 /**
  * valid_next - Validates point can move in direction
+ * @map: Map to path
  * @point: point to move
  * @rows: number of rows
  * @cols: number of columns
  * @dir: Direction to move
  * Return: adjuested point or NULL;
  */
-point_t *valid_next(point_t *point, int rows, int cols, directions dir)
+point_t *valid_next(char **map, point_t *point, int rows, int cols, int dir)
 {
 	point_t *next;
 
-	if (dir == RIGHT)
+	puts("Made it to valid_next");
+
+	if (dir == 0)
 	{
 		if (point->x + 1 < cols)
 			SET_RIGHT;
 		else
+		{
+			puts("NULL 2");
 			return (NULL);
+		}
 	}
-	if (dir == BOTTOM)
+	if (dir == 1)
 	{
 		if (point->y + 1 < rows)
 			SET_BOTTOM;
 		else
+		{
+			puts("NULL 3");
 			return (NULL);
+		}
 	}
-	if (dir == LEFT)
+	if (dir == 2)
 	{
 		if (point->x - 1 >= 0)
 			SET_LEFT;
 		else
+		{
+			puts("NULL 4");
 			return (NULL);
+		}
 	}
-	if (dir == TOP)
+	if (dir == 3)
 	{
 		if (point->y - 1 >= 0)
 			SET_TOP;
 		else
+		{
+			puts("NULL 5");
 			return (NULL);
+		}
+	}
+	if (POINT == '1')
+	{
+		puts("NULL 6");
+		return (NULL);
 	}
 	return (next);
 }

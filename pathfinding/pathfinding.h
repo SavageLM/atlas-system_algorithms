@@ -13,6 +13,7 @@
 #define SET_BOTTOM next = point, next->y += 1
 #define SET_LEFT next = point, next->x -= 1
 #define SET_TOP next = point, next->y -= 1
+#define POINT map[next->y][next->x]
 
 /* STRUCTS */
 
