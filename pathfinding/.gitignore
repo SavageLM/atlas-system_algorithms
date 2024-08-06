@@ -1,1 +1,4 @@
 pathfinding-libs
+*-main.c
+libgraphs.a
+libqueues.a

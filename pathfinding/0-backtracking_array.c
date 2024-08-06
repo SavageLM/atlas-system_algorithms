@@ -1,9 +1,9 @@
 #include "pathfinding.h"
 
 queue_t *backtrack(char **map, int rows, int cols,
-					point_t const *point, point_t const *target,
+					point_t *point, point_t const *target,
 					queue_t *que, int *visit);
-point_t *valid_next(point_t const *point, int rows, int cols, directions dir);
+point_t *valid_next(point_t *point, int rows, int cols, directions dir);
 
 /**
  * backtracking_array - Function for finiding a path from start to target
@@ -51,14 +51,14 @@ queue_t *backtracking_array(char **map, int rows, int cols,
  * Return: pointer to que holding the path
  */
 queue_t *backtrack(char **map, int rows, int cols,
-					point_t const *point, point_t const *target,
+					point_t *point, point_t const *target,
 					queue_t *que, int *visit)
 {
 	int x = point->x, y = point->y;
 	point_t *tmp;
 	enum directions dir;
 
-	if (map[point->y, point->x])
+	if (map[point->y][point->x])
 		return (NULL);
 	if (x == target->x && y == target->y)
 	{
@@ -103,7 +103,7 @@ queue_t *backtrack(char **map, int rows, int cols,
  * @dir: Direction to move
  * Return: adjuested point or NULL;
  */
-point_t *valid_next(point_t const *point, int rows, int cols, directions dir)
+point_t *valid_next(point_t *point, int rows, int cols, directions dir)
 {
 	point_t *next;
 
