@@ -71,25 +71,25 @@ queue_t *backtrack(char **map, int rows, int cols,
 			return (que);
 	}
 	VISITED = 1;
-	dir = RIGHT, tmp = valid_next(map,point, rows, cols, dir);
+	dir = RIGHT, tmp = valid_next(map, point, rows, cols, dir);
 	if (tmp && backtrack(map, rows, cols, tmp, target, que, visit))
 	{
 		if (queue_push_front(que, (void *)point))
 			return (que);
 	}
-	dir = BOTTOM, tmp = valid_next(map,point, rows, cols, dir);
+	dir = BOTTOM, tmp = valid_next(map, point, rows, cols, dir);
 	if (tmp && backtrack(map, rows, cols, tmp, target, que, visit))
 	{
 		if (queue_push_front(que, (void *)point))
 			return (que);
 	}
-	dir = LEFT, tmp = valid_next(map,point, rows, cols, dir);
+	dir = LEFT, tmp = valid_next(map, point, rows, cols, dir);
 	if (tmp && backtrack(map, rows, cols, tmp, target, que, visit))
 	{
 		if (queue_push_front(que, (void *)point))
 			return (que);
 	}
-	dir = TOP, tmp = valid_next(map,point, rows, cols, dir);
+	dir = TOP, tmp = valid_next(map, point, rows, cols, dir);
 	if (tmp && backtrack(map, rows, cols, tmp, target, que, visit))
 	{
 		if (queue_push_front(que, (void *)point))
