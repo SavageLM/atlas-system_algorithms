@@ -9,6 +9,7 @@
 
 /* MACROS */
 #define VISITED visit[point->y * rows + point->x]
+#define G_VISIT visit[vert->index]
 #define SET_RIGHT next->x += 1
 #define SET_BOTTOM next->y += 1
 #define SET_LEFT next->x -= 1

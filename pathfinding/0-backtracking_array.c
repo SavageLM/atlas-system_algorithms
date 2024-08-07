@@ -29,16 +29,17 @@ queue_t *backtracking_array(char **map, int rows, int cols,
 	/* Access: visit[y * row + x]*/
 	visit = calloc((rows * cols), sizeof(int));
 	if (!visit)
-		return (NULL);
+		return (free(que), NULL);
 	tmp = malloc(sizeof(point_t));
 	if (!tmp)
-		return (NULL);
+		return (free(que), free(visit), NULL);
 	tmp->x = start->x, tmp->y = start->y;
 	if (!backtrack(map, rows, cols, tmp, target, que, visit))
 	{
 		puts("FINAL NULL");
 		return (NULL);
 	}
+	/* free(tmp), */ free(visit);
 	return (que);
 }
 
@@ -64,7 +65,6 @@ queue_t *backtrack(char **map, int rows, int cols,
 	if (VISITED)
 		return (NULL);
 	printf("Checking coordinates [%d, %d]\n", point->x, point->y);
-
 	if (x == target->x && y == target->y)
 	{
 		if (queue_push_front(que, (void *)point))
@@ -95,6 +95,8 @@ queue_t *backtrack(char **map, int rows, int cols,
 		if (queue_push_front(que, (void *)point))
 			return (que);
 	}
+	if (tmp)
+		free(tmp);
 	return (NULL);
 }
 
