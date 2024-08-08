@@ -67,59 +67,11 @@ queue_t *backtrack(char **map, int rows, int cols,
 		backtrack(map, rows, cols, x, y + 1, target, que, visit) ||
 		backtrack(map, rows, cols, x - 1, y, target, que, visit) ||
 		backtrack(map, rows, cols, x, y - 1, target, que, visit))
-		{
-			point = malloc(sizeof(point_t));
-			point->x = x, point->y = y;
-			queue_push_front(que, (void *)point);
-			return (que);
-		}
+	{
+		point = malloc(sizeof(point_t));
+		point->x = x, point->y = y;
+		queue_push_front(que, (void *)point);
+		return (que);
+	}
 	return (NULL);
 }
-
-/**
- * valid_next - Validates point can move in direction
- * @map: Map to path
- * @point: point to move
- * @rows: number of rows
- * @cols: number of columns
- * @dir: Direction to move
- * Return: adjuested point or NULL;
- */
-/* point_t *valid_next(char **map, point_t *point, int rows, int cols, int dir)
-{
-	point_t *next;
-
-	next = point;
-	if (dir == 0)
-	{
-		if (point->x + 1 < cols)
-			SET_RIGHT;
-		else
-			return (NULL);
-	}
-	if (dir == 1)
-	{
-		if (point->y + 1 < rows)
-			SET_BOTTOM;
-		else
-			return (NULL);
-	}
-	if (dir == 2)
-	{
-		if (point->x - 1 >= 0)
-			SET_LEFT;
-		else
-			return (NULL);
-	}
-	if (dir == 3)
-	{
-		if (point->y - 1 >= 0)
-			SET_TOP;
-		else
-			return (NULL);
-	}
-	if (POINT == '1')
-		return (NULL);
-	return (next);
-}
- */
