@@ -1,9 +1,8 @@
 #include "pathfinding.h"
 
 queue_t *backtrack(char **map, int rows, int cols,
-					point_t *point, point_t const *target,
+					int x, int y, point_t const *target,
 					queue_t *que, int *visit);
-point_t *valid_next(char **map, point_t *point, int rows, int cols, int dir);
 
 /**
  * backtracking_array - Function for finiding a path from start to target
@@ -18,8 +17,7 @@ queue_t *backtracking_array(char **map, int rows, int cols,
 							point_t const *start, point_t const *target)
 {
 	queue_t *que = NULL;
-	point_t *tmp = NULL;
-	int *visit;
+	int *visit, x = 0, y = 0;
 
 	if (!map || !rows || !cols || !start || !target)
 		return (NULL);
@@ -30,16 +28,13 @@ queue_t *backtracking_array(char **map, int rows, int cols,
 	visit = calloc((rows * cols), sizeof(int));
 	if (!visit)
 		return (free(que), NULL);
-	tmp = malloc(sizeof(point_t));
-	if (!tmp)
-		return (free(que), free(visit), NULL);
-	tmp->x = start->x, tmp->y = start->y;
-	if (!backtrack(map, rows, cols, tmp, target, que, visit))
+	x = start->x, y = start->y;
+	if (!backtrack(map, rows, cols, x, y, target, que, visit))
 	{
 		puts("FINAL NULL");
 		return (NULL);
 	}
-	/* free(tmp), */ free(visit);
+	free(visit), visit = NULL;
 	return (que);
 }
 
@@ -48,55 +43,36 @@ queue_t *backtracking_array(char **map, int rows, int cols,
  * @map: Read-only 2d aray
  * @rows: Num of rows
  * @cols: Num of cols
- * @point: point to check
+ * @x: x point to check
+ * @y: y point to check
  * @target: pointer to end of path
  * @que: Que to hold the path
  * @visit: array to track if point has been visited
  * Return: pointer to que holding the path
  */
 queue_t *backtrack(char **map, int rows, int cols,
-					point_t *point, point_t const *target,
+					int x, int y, point_t const *target,
 					queue_t *que, int *visit)
 {
-	int x = point->x, y = point->y;
-	point_t *tmp;
-	enum directions dir;
+	point_t *point = NULL;
+	/* enum directions dir; */
 
-	if (VISITED)
+	if (x < 0 || x > cols - 1 || y < 0 || y > rows - 1 || map[y][x] == '1'
+		|| VISITED)
 		return (NULL);
-	printf("Checking coordinates [%d, %d]\n", point->x, point->y);
-	if (x == target->x && y == target->y)
-	{
-		if (queue_push_front(que, (void *)point))
-			return (que);
-	}
 	VISITED = 1;
-	dir = RIGHT, tmp = valid_next(map, point, rows, cols, dir);
-	if (tmp && backtrack(map, rows, cols, tmp, target, que, visit))
-	{
-		if (queue_push_front(que, (void *)point))
+	printf("Checking coordinates [%d, %d]\n", x, y);
+	if ((x == target->x && y == target->y) ||
+		backtrack(map, rows, cols, x + 1, y, target, que, visit) ||
+		backtrack(map, rows, cols, x, y + 1, target, que, visit) ||
+		backtrack(map, rows, cols, x - 1, y, target, que, visit) ||
+		backtrack(map, rows, cols, x, y - 1, target, que, visit))
+		{
+			point = malloc(sizeof(point_t));
+			point->x = x, point->y = y;
+			queue_push_front(que, (void *)point);
 			return (que);
-	}
-	dir = BOTTOM, tmp = valid_next(map, point, rows, cols, dir);
-	if (tmp && backtrack(map, rows, cols, tmp, target, que, visit))
-	{
-		if (queue_push_front(que, (void *)point))
-			return (que);
-	}
-	dir = LEFT, tmp = valid_next(map, point, rows, cols, dir);
-	if (tmp && backtrack(map, rows, cols, tmp, target, que, visit))
-	{
-		if (queue_push_front(que, (void *)point))
-			return (que);
-	}
-	dir = TOP, tmp = valid_next(map, point, rows, cols, dir);
-	if (tmp && backtrack(map, rows, cols, tmp, target, que, visit))
-	{
-		if (queue_push_front(que, (void *)point))
-			return (que);
-	}
-	if (tmp)
-		free(tmp);
+		}
 	return (NULL);
 }
 
@@ -109,14 +85,11 @@ queue_t *backtrack(char **map, int rows, int cols,
  * @dir: Direction to move
  * Return: adjuested point or NULL;
  */
-point_t *valid_next(char **map, point_t *point, int rows, int cols, int dir)
+/* point_t *valid_next(char **map, point_t *point, int rows, int cols, int dir)
 {
-	point_t *next = NULL;
+	point_t *next;
 
-	next = malloc(sizeof(point_t));
-	if (!next)
-		return (NULL);
-	next->x = point->x, next->y = point->y;
+	next = point;
 	if (dir == 0)
 	{
 		if (point->x + 1 < cols)
@@ -149,3 +122,4 @@ point_t *valid_next(char **map, point_t *point, int rows, int cols, int dir)
 		return (NULL);
 	return (next);
 }
+ */
