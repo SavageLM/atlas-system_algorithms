@@ -93,6 +93,6 @@ int get_distance(vertex_t const *start, vertex_t const *target, graph_t *graph,
 		}
 	}
 	if (!node || node != target)
-			return (0);
+		return (0);
 	return (1);
 }
