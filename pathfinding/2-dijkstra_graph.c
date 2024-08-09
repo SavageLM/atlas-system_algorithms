@@ -46,8 +46,8 @@ queue_t *dijkstra_graph(graph_t *graph, vertex_t const *start,
 	{
 		if (!vert)
 		{
-			free(prev), free(dist), free(visit);
-			visit = NULL, dist = NULL, prev = NULL;
+			free(prev), free(dist), free(visit), free(que);
+			visit = NULL, dist = NULL, prev = NULL, que = NULL;
 			return (NULL);
 		}
 		queue_push_front(que, strdup(vert->content));
