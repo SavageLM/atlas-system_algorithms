@@ -8,6 +8,7 @@ int get_distance(vertex_t const *start, vertex_t const *target, graph_t *graph,
  * @graph: Graph to find path in
  * @start: starting vertex
  * @target: Target Vertex
+ * Return: Que holding path or NULL
  */
 queue_t *dijkstra_graph(graph_t *graph, vertex_t const *start,
 						vertex_t const *target)
