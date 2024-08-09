@@ -29,21 +29,6 @@ typedef struct point_s
 	int y;
 } point_t;
 
-/**
- * enum direction - direction point needs to move
- * @RIGHT: Move to the right
- * @BOTTOM: Move down
- * @LEFT: Move to the left
- * @TOP: Move up
- */
-typedef enum directions
-{
-	RIGHT,
-	BOTTOM,
-	LEFT,
-	TOP
-} directions;
-
 /* Prototypes */
 queue_t *backtracking_array(char **map, int rows, int cols,
 							point_t const *start, point_t const *target);
