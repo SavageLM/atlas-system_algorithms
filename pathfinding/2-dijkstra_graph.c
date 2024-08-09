@@ -19,40 +19,29 @@ queue_t *dijkstra_graph(graph_t *graph, vertex_t const *start,
 
 	if (!graph || !start || !target)
 		return (NULL);
-
 	que = calloc(1, sizeof(queue_t));
 	if (!que)
 		return (NULL);
-
 	visit = calloc(graph->nb_vertices, sizeof(int));
 	if (!visit)
 		return (free(que), NULL);
-
 	dist = calloc(graph->nb_vertices, sizeof(int));
 	if (!dist)
 		return (free(visit), free(que), NULL);
-
 	prev = calloc(graph->nb_vertices, sizeof(vertex_t *));
 	if (!prev)
 		return (free(visit), free(que), free(dist), NULL);
-
 	/* Setting all indices in dist to int max */
 	for (i = 0; i < graph->nb_vertices; i++)
 		dist[i] = INT_MAX;
-
-	get_distance(start, target, graph, visit, dist, prev);
-
-	for (vert = prev[target->index]; prev[vert->index]; vert = prev[vert->index])
+	if (!get_distance(start, target, graph, visit, dist, prev))
 	{
-		if (!vert)
-		{
-			free(prev), free(dist), free(visit), free(que);
-			visit = NULL, dist = NULL, prev = NULL, que = NULL;
-			return (NULL);
-		}
-		queue_push_front(que, strdup(vert->content));
+		free(prev), free(dist), free(visit), free(que);
+		visit = NULL, dist = NULL, prev = NULL, que = NULL;
+		return (NULL);
 	}
-
+	for (vert = prev[target->index]; prev[vert->index]; vert = prev[vert->index])
+		queue_push_front(que, strdup(vert->content));
 	queue_push_front(que, strdup(start->content));
 	queue_push_back(que, strdup(target->content));
 
@@ -103,5 +92,7 @@ int get_distance(vertex_t const *start, vertex_t const *target, graph_t *graph,
 			}
 		}
 	}
+	if (!node || node != target)
+			return (0);
 	return (1);
 }
