@@ -43,7 +43,15 @@ queue_t *dijkstra_graph(graph_t *graph, vertex_t const *start,
 	get_distance(start, target, graph, visit, dist, prev);
 
 	for (vert = prev[target->index]; prev[vert->index]; vert = prev[vert->index])
+	{
+		if (!vert)
+		{
+			free(prev), free(dist), free(visit);
+			visit = NULL, dist = NULL, prev = NULL;
+			return (NULL);
+		}
 		queue_push_front(que, strdup(vert->content));
+	}
 
 	queue_push_front(que, strdup(start->content));
 	queue_push_back(que, strdup(target->content));
