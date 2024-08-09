@@ -30,7 +30,10 @@ queue_t *backtracking_array(char **map, int rows, int cols,
 		return (free(que), NULL);
 	x = start->x, y = start->y;
 	if (!backtrack(map, rows, cols, x, y, target, que, visit))
+	{
+		free(visit), visit = NULL;
 		return (NULL);
+	}
 	free(visit), visit = NULL;
 	return (que);
 }
