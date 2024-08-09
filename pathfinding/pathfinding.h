@@ -11,10 +11,6 @@
 /* MACROS */
 #define VISITED visit[y * rows + x]
 #define G_VISIT visit[vert->index]
-#define SET_RIGHT next->x += 1
-#define SET_BOTTOM next->y += 1
-#define SET_LEFT next->x -= 1
-#define SET_TOP next->y -= 1
 #define POINT map[next->y][next->x]
 #define NEXT_VERT edge->dest->index
 #define DEST edge->dest->index
