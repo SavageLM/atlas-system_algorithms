@@ -7,7 +7,7 @@
  */
 size_t nary_tree_diameter(nary_tree_t const *root)
 {
-	size_t max = 0, diam = 0;
+	size_t max = 1, diam = 0;
 	
 	if (!root)
 		return (0);
