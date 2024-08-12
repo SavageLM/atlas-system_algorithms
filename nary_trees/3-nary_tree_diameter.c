@@ -19,7 +19,7 @@ size_t nary_tree_diameter(nary_tree_t const *root)
 		height = get_height(node);
 		if (height > max1)
 			max2 = max1, max1 = height;
-        else if (height > max2)
+		else if (height > max2)
 			max2 = height;
 		dm = dm > nary_tree_diameter(node) ? dm : nary_tree_diameter(node);
 	}
@@ -27,7 +27,7 @@ size_t nary_tree_diameter(nary_tree_t const *root)
 }
 
 /**
- * get_heigh - gets the height of a tree
+ * get_height - gets the height of a tree
  * @root: tree to get height of
  * Return: height or 0
  */
@@ -41,4 +41,4 @@ size_t get_height(nt const *root)
 		max = max > get_height(node) ? max : get_height(node);
 	}
 	return (max + 1);
-} 
+}
