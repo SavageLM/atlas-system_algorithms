@@ -8,5 +8,30 @@
  */
 int path_exists(nary_tree_t const *root, char const * const *path)
 {
-	;
+	nt *node, *child;
+	static int i;
+
+	if (path[i] == NULL)
+		return (1);
+	if (!root)
+		return (0);
+	for (node = (nt *)&root->content; node; node = node->next)
+	{
+		if (!strcmp(path[i], node->content))
+		{
+			i++;
+			if (path_exists(node->children, path))
+				return (1);
+		}
+		for (child = node->children; child; child = child->next)
+		{
+			if (!strcmp(path[i], child->content))
+			{
+				i++;
+				if (path_exists(child->children, path))
+					return (1);
+			}
+		}
+	}
+	return (0);
 }
