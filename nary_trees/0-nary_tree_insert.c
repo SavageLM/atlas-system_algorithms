@@ -22,13 +22,13 @@ nary_tree_t *nary_tree_insert(nary_tree_t *parent, char const *str)
 		new->next = NULL;
 		return (new);
 	}
-	tmp = parent->next;
+	tmp = parent->children;
 	if (!tmp)
 	{
-		parent->next = new, new->next = NULL, parent->nb_children += 1;
+		parent->children = new, new->next = NULL, parent->nb_children += 1;
 		return (new);
 	}
-	new->next = tmp, tmp->parent = new, parent->next = new;
+	new->next = tmp, tmp->parent = new, parent->children = new;
 	parent->nb_children += 1;
 	return (new);
 }
